@@ -1,12 +1,13 @@
 <?php
 namespace Plesk\Module\ToggleLitespeed\Hooks;
 
+use pm_Hook_DomainSettings;
 use pm_Domain;
 use pm_Form_Simple;
 use pm_Context;
 use Plesk\Module\ToggleLitespeed\Toggle;
 
-class DomainSettings extends \pm_Hook_DomainSettings
+class Modules_ToggleLitespeed_Hooks_DomainSettings extends pm_Hook_DomainSettings
 {
     public function getForm(pm_Domain $domain): pm_Form_Simple
     {
