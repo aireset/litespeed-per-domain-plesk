@@ -1,6 +1,5 @@
 <?php
-
-namespace Plesk\Module\ToggleLitespeed\Hooks;
+// namespace Plesk\Module\ToggleLitespeed\Hooks;
 
 use pm_Hook_CustomButtons;
 use pm_Context;
@@ -9,13 +8,12 @@ use Plesk\Module\ToggleLitespeed\Toggle;
 
 class Modules_ToggleLitespeed_CustomButtons extends pm_Hook_CustomButtons
 {
-    public function getButtons(): array
+    public function getButtons()
     {
         $buttons = [];
 
-        // Pega o ID do domínio que o Plesk passa no GET
-        $domainId = isset($_GET['domainId']) ? (int)$_GET['domainId'] : null;
-        var_dump($domainId);
+        // lê o parâmetro 'id' que o Plesk injeta via contextParams
+        $domainId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         if ($domainId) {
             // Carrega o domínio e nome
             $domain = pm_Domain::getById($domainId);
@@ -42,35 +40,7 @@ class Modules_ToggleLitespeed_CustomButtons extends pm_Hook_CustomButtons
                 'link'        => $link,
                 'icon'        => pm_Context::getBaseUrl() . 'images/icon.svg',
             ];
-
-            $buttons[] = [
-                'place' => self::PLACE_DOMAIN_PROPERTIES_DYNAMIC,
-                'section' => self::SECTION_DOMAIN_PROPS_DYNAMIC_DEV_TOOLS,
-                'title'       => $title,
-                'description' => "$title neste domínio",
-                'link'        => $link,
-                'icon'        => pm_Context::getBaseUrl() . 'images/icon.svg',
-            ];
-        } else{
-
-            $buttons[] = [
-                'place'       => self::PLACE_COMMON,
-                'title'       => 'teste',
-                'description' => "treste neste domínio",
-                'link'        => '',
-                'icon'        => pm_Context::getBaseUrl() . 'images/icon.svg',
-            ];
-
-            $buttons[] = [
-                'place' => self::PLACE_DOMAIN_PROPERTIES_DYNAMIC,
-                'section' => self::SECTION_DOMAIN_PROPS_DYNAMIC_DEV_TOOLS,
-                'title'       => 'teste',
-                'description' => "treste neste domínio",
-                'link'        => '',
-                'icon'        => pm_Context::getBaseUrl() . 'images/icon.svg',
-            ];
-
-        }
+        } 
 
         return $buttons;
     }
