@@ -16,7 +16,7 @@ class ComposerStaticInit3827634716cd6cbaca8ad88ff303d165
     public static $prefixDirsPsr4 = array (
         'Plesk\\\\Module\\\\ToggleLitespeed\\\\' => 
         array (
-            0 => __DIR__ . '/../../..' . '/plib',
+            0 => __DIR__ . '/../../..' . '/plib/library',
         ),
     );
 

@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'Plesk\\\\Module\\\\ToggleLitespeed\\\\' => array($baseDir . '/plib'),
+    'Plesk\\\\Module\\\\ToggleLitespeed\\\\' => array($baseDir . '/plib/library'),
 );
