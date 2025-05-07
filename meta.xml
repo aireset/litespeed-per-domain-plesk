@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <id>toggle-litespeed</id>
+  <name>Toggle LiteSpeed</name>
+  <description>Ativa ou desativa o LiteSpeed por domínio.</description>
+  <version>1.0</version>
+  <vendor>Aireset Agência Digital</vendor>
+  <interface>
+    <menu>
+      <entry>
+        <title>Alternar LiteSpeed</title>
+        <actionUrl>/toggle-litespeed/</actionUrl>
+        <context>domain</context>
+      </entry>
+      <entry>
+        <title>Alternar LiteSpeed</title>
+        <actionUrl>/toggle-litespeed/</actionUrl>
+        <context>home</context>
+      </entry>
+    </menu>
+  </interface>
+</module>
