@@ -1,22 +1,18 @@
 <?php
-require_once __DIR__ . '/../plib/vendor/autoload.php';
-
-use Plesk\Module\ToggleLitespeed\Toggle;
-use pm_Context;
-use pm_Domain;
-
+// inicializa o contexto do módulo
 pm_Context::init('toggle-litespeed');
 
-// ID do domínio passado pelo Plesk (contextParams)
+// lê o domínio via GET (Plesk injeta id=DOM_ID quando context=domain)
 $domainId = (int) ($_GET['id'] ?? 0);
 $domain   = $domainId ? pm_Domain::getById($domainId) : null;
 
-if (!$domain) {
+if (! $domain) {
     echo '<p>Selecione um domínio para alternar o LiteSpeed.</p>';
     exit;
 }
 
-$status = Toggle::isEnabled($domain->getName());
+// verifica status atual
+$status = Modules_ToggleLitespeed_Toggle::isEnabled($domain->getName());
 $action = $status ? 'disable' : 'enable';
 $label  = $status ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
 ?>
@@ -24,7 +20,7 @@ $label  = $status ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
 <html>
 <head>
   <meta charset="UTF-8">
-  <title><?= htmlspecialchars($domain->getName()) ?> – Toggle LiteSpeed</title>
+  <title>Toggle LiteSpeed – <?= htmlspecialchars($domain->getName()) ?></title>
   <link rel="stylesheet" href="<?= pm_Context::getBaseUrl() ?>css/style.css">
 </head>
 <body>

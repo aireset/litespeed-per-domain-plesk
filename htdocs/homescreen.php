@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/../plib/vendor/autoload.php';
-
-use Plesk\Module\ToggleLitespeed\Toggle;
-use pm_Domain;
+pm_Context::init('toggle-litespeed');
 
 $domains    = pm_Domain::getAllDomains();
 $statusList = [];
@@ -10,7 +7,8 @@ $statusList = [];
 foreach ($domains as $domain) {
     $statusList[] = [
         'name'   => $domain->getName(),
-        'status' => Toggle::isEnabled($domain->getName()) ? 'Ativado' : 'Desativado',
+        'status' => Modules_ToggleLitespeed_Toggle::isEnabled($domain->getName())
+                    ? 'Ativado' : 'Desativado',
     ];
 }
 ?>

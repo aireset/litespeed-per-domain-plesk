@@ -1,13 +1,13 @@
 <?php
-namespace Plesk\Module\ToggleLitespeed\Hooks;
+// namespace Plesk\Module\ToggleLitespeed\Hooks;
 
-use pm_Hook_CustomButtons;
-use pm_Context;
-use pm_Session;
-use pm_Domain;
-use Plesk\Module\ToggleLitespeed\Toggle;
+// use pm_Hook_CustomButtons;
+// use pm_Context;
+// use pm_Session;
+// use pm_Domain;
+// use Plesk\Module\ToggleLitespeed\Toggle;
 
-class Modules_ToggleLitespeed_Hooks_CustomButtons extends pm_Hook_CustomButtons
+class Modules_ToggleLitespeed_CustomButtons extends pm_Hook_CustomButtons
 {
     public function getButtons(): array
     {
@@ -25,22 +25,24 @@ class Modules_ToggleLitespeed_Hooks_CustomButtons extends pm_Hook_CustomButtons
         //     'icon' => pm_Context::getBaseUrl() . 'images/litespeed-icon.svg',
         // ];
         
-        if ($domain instanceof pm_Domain) {
+        if ($domain->hasHosting() && $domain->isActive()) {
             $domainId   = $domain->getId();
             $domainName = $domain->getName();
             // $enabled    = Toggle::isEnabled($domainName);
-            $enabled    = false;
+            $enabled = Modules_ToggleLitespeed_Toggle::isEnabled($domain->getName());
+            // $enabled    = false;
     
             $action = $enabled ? 'disable' : 'enable';
             $title  = $enabled ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
 
             $buttons[] = [
-                'place'       => self::PLACE_COMMON,
-                'title'        => $title,
-                'description'  => "$title neste domínio",
-                'icon' => pm_Context::getBaseUrl() . 'images/litespeed-icon.svg',
-                'link'         => pm_Context::getBaseUrl() . 'toggle.php?action=' . $action,
-                'contextParams'=> true
+                'place'         => self::PLACE_COMMON,
+                'title'         => $title,
+                // 'description'  => "$title neste domínio ".Modules_ToggleLitespeed_Toggle::teste('aaaaaa'),
+                'description'   => "$title neste domínio ",
+                'icon'          => pm_Context::getBaseUrl() . 'images/litespeed-icon.svg',
+                'link'          => pm_Context::getBaseUrl() . 'toggle.php?action=' . $action,
+                'contextParams' => true
             ];
 
             $buttons[] = [

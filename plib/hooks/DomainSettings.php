@@ -1,22 +1,17 @@
 <?php
-namespace Plesk\Module\ToggleLitespeed\Hooks;
-
-use pm_Hook_DomainSettings;
-use pm_Domain;
-use pm_Form_Simple;
-use pm_Context;
-use Plesk\Module\ToggleLitespeed\Toggle;
-
+/**
+ * Adiciona checkbox em Domain Settings
+ */
 class Modules_ToggleLitespeed_Hooks_DomainSettings extends pm_Hook_DomainSettings
 {
-    public function getForm(pm_Domain $domain): pm_Form_Simple
+    public function getForm(pm_Domain $domain)
     {
-        $form = new \pm_Form_Simple();
+        $form = new pm_Form_Simple();
         $form->addElement('checkbox', 'enable_litespeed', [
             'label' => 'Ativar LiteSpeed neste domínio',
         ]);
         $form->setDefaults([
-            'enable_litespeed' => Toggle::isEnabled($domain->getName()),
+            'enable_litespeed' => Modules_ToggleLitespeed_Toggle::isEnabled($domain->getName()),
         ]);
         $form->addControlButtons([
             'sendTitle'  => 'Salvar',
@@ -25,10 +20,10 @@ class Modules_ToggleLitespeed_Hooks_DomainSettings extends pm_Hook_DomainSetting
         return $form;
     }
 
-    public function process(pm_Domain $domain, pm_Form_Simple $form): void
+    public function process(pm_Domain $domain, pm_Form_Simple $form)
     {
         if ($form->isSubmitted() && $form->isValid()) {
-            Toggle::apply(
+            Modules_ToggleLitespeed_Toggle::apply(
                 $domain->getName(),
                 (bool) $form->getValue('enable_litespeed')
             );

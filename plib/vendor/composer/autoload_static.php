@@ -9,12 +9,12 @@ class ComposerStaticInit3827634716cd6cbaca8ad88ff303d165
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
-            'Plesk\\\\Module\\\\ToggleLitespeed\\\\' => 32,
+            'Plesk\\Module\\ToggleLitespeed\\' => 29,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Plesk\\\\Module\\\\ToggleLitespeed\\\\' => 
+        'Plesk\\Module\\ToggleLitespeed\\' => 
         array (
             0 => __DIR__ . '/../../..' . '/plib/library',
         ),
