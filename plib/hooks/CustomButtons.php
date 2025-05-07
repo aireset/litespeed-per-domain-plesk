@@ -7,9 +7,9 @@ use pm_Session;
 use pm_Domain;
 use Plesk\Module\ToggleLitespeed\Toggle;
 
-class Modules_ToggleLitespeed_CustomButtons extends pm_Hook_CustomButtons
+class CustomButtons extends pm_Hook_CustomButtons
 {
-    public function getButtons()
+    public function getButtons(): array
     {
         $buttons = [];
 

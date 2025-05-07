@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../src/plib/vendor/autoload.php';
+require_once __DIR__ . '/../plib/vendor/autoload.php';
 
 use Plesk\Module\ToggleLitespeed\Toggle;
 use pm_Context;
@@ -7,7 +7,7 @@ use pm_Domain;
 
 pm_Context::init('toggle-litespeed');
 
-// Pega o ID do domínio na URL
+// ID do domínio passado pelo Plesk (contextParams)
 $domainId = (int) ($_GET['id'] ?? 0);
 $domain   = $domainId ? pm_Domain::getById($domainId) : null;
 
@@ -24,7 +24,7 @@ $label  = $status ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Toggle LiteSpeed – <?= htmlspecialchars($domain->getName()) ?></title>
+  <title><?= htmlspecialchars($domain->getName()) ?> – Toggle LiteSpeed</title>
   <link rel="stylesheet" href="<?= pm_Context::getBaseUrl() ?>css/style.css">
 </head>
 <body>
@@ -34,6 +34,6 @@ $label  = $status ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
     <input type="hidden" name="action" value="<?= $action ?>">
     <button type="submit"><?= $label ?></button>
   </form>
-  <p>Status atual: <b><?= $status ? 'Ativado' : 'Desativado' ?></b></p>
+  <p>Status atual: <strong><?= $status ? 'Ativado' : 'Desativado' ?></strong></p>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Plesk\Module\ToggleLitespeed;
 
 class Toggle

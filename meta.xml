@@ -5,7 +5,7 @@
   <description>Ativa ou desativa o LiteSpeed por domínio.</description>
   <category>performance</category>
   <version>1.6.0</version>
-  <release>001</release>
+  <release>003</release>
   <vendor>Aireset Agência Digital</vendor>
   <url>https://github.com/aireset/litespeed-per-domain-plesk</url>
   <support_url>https://github.com/aireset/litespeed-per-domain-plesk/issues</support_url>
