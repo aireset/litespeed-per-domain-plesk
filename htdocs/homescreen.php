@@ -1,21 +1,21 @@
 <?php
-require_once '/usr/local/psa/admin/plib/api-common/cu.php';
-require_once '/usr/local/psa/admin/plib/modules/toggle-litespeed/Toggle.php';
+require_once __DIR__ . '/../src/plib/vendor/autoload.php';
 
 use Plesk\Module\ToggleLitespeed\Toggle;
+use pm_Domain;
 
-$domains = pm_Domain::getAllDomains();
+$domains    = pm_Domain::getAllDomains();
 $statusList = [];
+
 foreach ($domains as $domain) {
-    $name = $domain->getName();
     $statusList[] = [
-        'name' => $name,
-        'status' => Toggle::isEnabled($name) ? 'Ativado' : 'Desativado'
+        'name'   => $domain->getName(),
+        'status' => Toggle::isEnabled($domain->getName()) ? 'Ativado' : 'Desativado',
     ];
 }
 ?>
 <ul style="font-family: sans-serif; padding: 20px;">
   <?php foreach ($statusList as $item): ?>
-    <li><strong><?= $item['name'] ?></strong>: <?= $item['status'] ?></li>
+    <li><strong><?= htmlspecialchars($item['name']) ?></strong>: <?= $item['status'] ?></li>
   <?php endforeach; ?>
 </ul>

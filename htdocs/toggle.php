@@ -1,23 +1,25 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/plib/vendor/autoload.php';
+
 use Plesk\Module\ToggleLitespeed\Toggle;
+use pm_Domain;
 use pm_Context;
 
-// Sanitiza e obtém parâmetros
-$domain   = preg_replace('/[^a-z0-9.\\-]/i', '', $_GET['domain']   ?? '');
+// Lê parâmetros que o Plesk injeta via contextParams (id=domínio + type)
 $action   = $_GET['action']   ?? '';
-$domainId = (int) ($_GET['domainId'] ?? 0);
+$domainId = (int) ($_GET['id'] ?? 0);
 
-// Validação
 if (!in_array($action, ['enable','disable'], true) || !$domainId) {
     http_response_code(400);
     exit('Parâmetros inválidos');
 }
 
-// Aplica toggle
-Toggle::apply($domain, $action === 'enable');
+// Carrega o nome do domínio
+$domainName = pm_Domain::getById($domainId)->getName();
+// Aplica o toggle
+Toggle::apply($domainName, $action === 'enable');
 
-// Redireciona de volta para a lista de botões do domínio
+// Redireciona de volta à lista de módulos do Plesk
 header(
     'Location: '
     . pm_Context::getBaseUrl()

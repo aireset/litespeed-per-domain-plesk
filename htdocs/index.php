@@ -1,30 +1,39 @@
 <?php
+require_once __DIR__ . '/../src/plib/vendor/autoload.php';
+
 use Plesk\Module\ToggleLitespeed\Toggle;
+use pm_Context;
+use pm_Domain;
 
 pm_Context::init('toggle-litespeed');
-// Obtém ID do domínio via GET
-$domainId = isset($_GET['domainId']) ? (int) $_GET['domainId'] : null;
+
+// Pega o ID do domínio na URL
+$domainId = (int) ($_GET['id'] ?? 0);
 $domain   = $domainId ? pm_Domain::getById($domainId) : null;
+
+if (!$domain) {
+    echo '<p>Selecione um domínio para alternar o LiteSpeed.</p>';
+    exit;
+}
+
+$status = Toggle::isEnabled($domain->getName());
+$action = $status ? 'disable' : 'enable';
+$label  = $status ? 'Desativar LiteSpeed' : 'Ativar LiteSpeed';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Toggle LiteSpeed - <?= \$domain ? htmlspecialchars(\$domain->getName()) : 'Selecione Domínio' ?></title>
+  <title>Toggle LiteSpeed – <?= htmlspecialchars($domain->getName()) ?></title>
   <link rel="stylesheet" href="<?= pm_Context::getBaseUrl() ?>css/style.css">
 </head>
 <body>
-<?php if (\$domain): ?>
-  <?php \$status = Toggle::isEnabled(\$domain->getName()); ?>
-  <h2>Alternar LiteSpeed para: <b><?= htmlspecialchars(\$domain->getName()) ?></b></h2>
-  <form method="post" action="<?= pm_Context::getBaseUrl() ?>toggle.php">
-    <input type="hidden" name="domain" value="<?= htmlspecialchars(\$domain->getName()) ?>">
-    <button name="action" value="enable">Ativar LiteSpeed</button>
-    <button name="action" value="disable">Desativar LiteSpeed</button>
+  <h2>LiteSpeed em <strong><?= htmlspecialchars($domain->getName()) ?></strong></h2>
+  <form method="get" action="<?= pm_Context::getBaseUrl() ?>toggle.php">
+    <input type="hidden" name="id" value="<?= $domainId ?>">
+    <input type="hidden" name="action" value="<?= $action ?>">
+    <button type="submit"><?= $label ?></button>
   </form>
-  <p>Status atual: <b><?= \$status ? 'Ativado' : 'Desativado' ?></b></p>
-<?php else: ?>
-  <h2>Selecione um domínio para alternar o LiteSpeed.</h2>
-<?php endif; ?>
+  <p>Status atual: <b><?= $status ? 'Ativado' : 'Desativado' ?></b></p>
 </body>
 </html>

@@ -4,7 +4,7 @@
   <name>Toggle LiteSpeed</name>
   <description>Ativa ou desativa o LiteSpeed por domínio.</description>
   <category>performance</category>
-  <version>1.5</version>
+  <version>1.6</version>
   <release>0</release>
   <vendor>Aireset Agência Digital</vendor>
   <url>https://github.com/aireset/litespeed-per-domain-plesk</url>
@@ -15,10 +15,16 @@
   <interface>
     <menu>
       <entry>
-        <title>Alternar LiteSpeed</title>
+        <title>Toggle LiteSpeed</title>
         <actionUrl>/modules/toggle-litespeed/index.php</actionUrl>
         <context>domain</context>
       </entry>
     </menu>
+    <homeScreen>
+      <widget>
+        <title>Status do LiteSpeed</title>
+        <actionUrl>/modules/toggle-litespeed/homescreen.php</actionUrl>
+      </widget>
+    </homeScreen>
   </interface>
 </module>
