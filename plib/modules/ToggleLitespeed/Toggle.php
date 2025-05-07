@@ -3,21 +3,41 @@ namespace Plesk\Module\ToggleLitespeed;
 
 class Toggle
 {
-    public static function isEnabled($domain)
+    public static function isEnabled(string \$domain): bool
     {
-        $path = "/var/www/vhosts/$domain/conf/vhost.conf";
-        if (!file_exists($path)) return false;
-        return strpos(file_get_contents($path), 'ProxyPass') !== false;
+        \$path = "/var/www/vhosts/\$domain/conf/vhost.conf";
+        return file_exists(\$path)
+            && strpos(file_get_contents(\$path), 'ProxyPass') !== false;
     }
 
-    public static function apply($domain, $enable)
+    public static function apply(string \$domain, bool \$enable): void
     {
-        $path = "/var/www/vhosts/$domain/conf/vhost.conf";
-        if ($enable) {
-            file_put_contents($path, "<IfModule mod_proxy.c>\n  ProxyPass / http://127.0.0.1:1080/\n  ProxyPassReverse / http://127.0.0.1:1080/\n</IfModule>\n");
-        } else {
-            @unlink($path);
+        \$path = "/var/www/vhosts/\$domain/conf/vhost.conf";
+        // Backup antes de modificar
+        if (file_exists(\$path)) {
+            copy(\$path, "\$path.bak");
         }
-        exec("/usr/local/psa/admin/sbin/httpdmng --reconfigure-domain " . escapeshellarg($domain));
+        if (\$enable) {
+            \$content = <<<CONF
+<IfModule mod_proxy.c>
+  ProxyPass / http://127.0.0.1:1080/
+  ProxyPassReverse / http://127.0.0.1:1080/
+</IfModule>
+
+CONF;
+            file_put_contents(\$path, \$content, LOCK_EX);
+        } else {
+            @unlink(\$path);
+        }
+        // Reconfigura domínio
+        exec(
+            "/usr/local/psa/admin/sbin/httpdmng --reconfigure-domain " .
+            escapeshellarg(\$domain),
+            \$output,
+            \$code
+        );
+        if (\$code !== 0) {
+            throw new \RuntimeException("httpdmng falhou: " . implode("\n", \$output));
+        }
     }
 }
