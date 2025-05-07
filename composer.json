@@ -1,17 +1,16 @@
 {
-    "name": "aireset/toggle-litespeed-plesk",
-    "description": "Módulo Plesk para alternar o LiteSpeed por domínio",
-    "type": "library",
-    "config": {
-      "vendor-dir": "src/plib/vendor"
-    },
-    "autoload": {
-      "psr-4": {
-        "Plesk\\Module\\ToggleLitespeed\\": "plib/"
-      }
-    },
-    "require": {
-      "php": ">=7.0"
+  "name": "aireset/toggle-litespeed-plesk",
+  "description": "Módulo Plesk para alternar LiteSpeed por domínio",
+  "type": "library",
+  "config": {
+    "vendor-dir": "plib/vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Plesk\\\\Module\\\\ToggleLitespeed\\\\": "plib/"
     }
+  },
+  "require": {
+    "php": ">=7.0"
+  }
 }
-  
