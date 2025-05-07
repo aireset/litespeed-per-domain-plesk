@@ -5,18 +5,11 @@ class Modules_ToggleLitespeed_CustomButtons extends pm_Hook_CustomButtons
     {
         return [
             [
-                'place' => self::PLACE_DOMAIN,
-                'title' => 'Alternar LiteSpeed',
-                'description' => 'Ative ou desative o LiteSpeed para este domínio.',
-                'link' => pm_Context::getBaseUrl() . 'index.php',
-                'icon' => pm_Context::getBaseUrl() . 'images/icon.svg',
-            ],
-            [
-                'place' => self::PLACE_CUSTOMER_HOME,
+                'place' => self::PLACE_COMMON ,
                 'title' => 'Alternar LiteSpeed',
                 'description' => 'Gerencie o LiteSpeed para seus domínios.',
                 'link' => pm_Context::getBaseUrl() . 'index.php',
-                'icon' => pm_Context::getBaseUrl() . 'images/icon.svg',
+                'icon' => pm_Context::getBaseUrl() . 'images/litespeed-icon.svg',
             ],
         ];
     }
